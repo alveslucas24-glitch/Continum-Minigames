@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#21151e">
+  <title>Continum — sua aventura de leitura</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <script src="vendor/three.min.js"></script>
+</head>
+<body>
+  <div class="season-sky" aria-hidden="true"><span>🎃</span><span>👻</span><span>🕸️</span><span>🦇</span><span>🍂</span></div>
+  <header class="topbar">
+    <a class="brand" href="#inicio" data-route="inicio" aria-label="Continum início"><span class="brand-mark">C</span><span>Conti<b>num</b><small>LEITURA EM JOGO</small></span></a>
+    <nav class="main-nav" aria-label="Navegação principal"><a href="#inicio" data-route="inicio">Início</a><a href="#biblioteca" data-route="biblioteca">Biblioteca</a><a href="#terror" data-route="terror">Estante sombria</a></nav>
+    <button class="avatar" id="profileButton" aria-label="Editar nome do perfil">L</button>
+  </header>
+  <main id="inicio">
+    <section class="page-view home-view" id="homeView">
+      <section class="hero">
+        <div class="hero-copy"><p class="eyebrow" id="todayLabel">SUA JORNADA DE HOJE</p><h1>Abra um livro.<br><em>Entre em outro mundo.</em></h1><p class="hero-sub">Cada página soma à sua jornada. Explore sua biblioteca, complete missões e descubra novas histórias.</p><div class="hero-actions"><a class="button primary" href="#biblioteca" data-route="biblioteca">Explorar a biblioteca <span>→</span></a><button class="button ghost" id="openAdd">＋ Adicionar livro</button></div></div>
+        <aside class="daily-card" id="dailyCard"><div class="daily-top"><span class="sun-icon" id="holidayIcon">☼</span><span class="pill" id="holidayTag">SEU DIA</span></div><p class="date-line" id="dateLine"></p><h2 id="holidayTitle">Uma boa hora para ler</h2><p id="holidayDesc">Sua próxima aventura está esperando na estante.</p><button class="pumpkin-portal" id="pumpkinPortal" aria-label="Abrir a estante de terror e suspense"><span>🎃</span><span>Entrar na estante sombria <b>→</b></span></button><div class="daily-deco" aria-hidden="true">❧</div></aside>
+      </section>
+      <section class="progress-panel" aria-label="Progresso de leitura">
+        <div class="level-badge"><span>NV</span><strong id="levelNum">1</strong></div>
+        <div class="progress-main"><div class="progress-heading"><div><p class="eyebrow">EXPERIÊNCIA DE LEITURA</p><h2><span id="ltNum">0</span> <small>LT</small> <span class="progress-of">/ 100 LT para o próximo nível</span></h2></div><div class="streak"><span>🔥</span><b id="streakNum">0</b><small>dias seguidos</small></div></div><div class="xp-track"><div class="xp-fill" id="xpFill"></div><span class="xp-glow"></span></div><div class="progress-foot"><span id="pagesRead">0 páginas lidas no total</span><span id="nextReward">Próximo passe em 5 níveis</span></div></div>
+        <div class="pass-count"><span class="pass-icon">✦</span><b id="passNum">0</b><small>passes</small></div>
+      </section>
+      <section class="mission-strip" id="missoes"><div class="mission-icon">✎</div><div class="mission-text"><p class="eyebrow">MISSÃO DE LEITURA</p><h2 id="missionTitle">Sua próxima missão começa ao ler</h2><p id="missionDesc">Leia um livro para desbloquear perguntas sobre as páginas anteriores.</p></div><div class="mission-status" id="missionStatus">AGUARDANDO</div></section>
+      <section class="home-discover"><div><p class="eyebrow">SUA PRÓXIMA AVENTURA</p><h2>Qual história combina com seu momento?</h2><p>Visite as estantes, procure por gênero ou abra o portal de Halloween para uma seleção sombria.</p></div><a class="button ghost" href="#biblioteca" data-route="biblioteca">Ver estantes <span>→</span></a></section>
+      <section class="extras-grid" id="conquistas">
+        <article class="extra-card calendar-card"><div class="extra-heading"><div><p class="eyebrow">CALENDÁRIO DE LEITURA</p><h2>Seu ritmo, dia a dia</h2></div><span class="extra-icon">▦</span></div><div class="week-grid" id="weekGrid"></div><p class="muted" id="calendarHint">Um pouco de leitura todos os dias constrói grandes jornadas.</p></article>
+        
+<article class="extra-card goal-card">
+  <div class="extra-heading"><div><p class="eyebrow">META DE HOJE</p><h2>Desafio diário</h2></div><span class="extra-icon">🎯</span></div>
+  <div class="goal-track"><div class="goal-fill" id="dailyGoalFill" style="width:0%"></div></div>
+  <p id="dailyGoalText">0 / 10 páginas hoje</p>
+  <p class="muted small">Ajuste a meta no perfil (ícone no canto superior).</p>
+</article>
+<article class="extra-card stats-card">
+  <div class="extra-heading"><div><p class="eyebrow">ESTATÍSTICAS</p><h2>Sua jornada em números</h2></div><span class="extra-icon">📊</span></div>
+  <ul class="stats-list">
+    <li><span>Esta semana</span> <strong id="weekPages">0 pág.</strong></li>
+    <li><span>Tempo aproximado</span> <strong id="readTime">0 min</strong></li>
+    <li><span>Gêneros mais lidos</span> <strong id="topGenres">—</strong></li>
+  </ul>
+</article>
+<article class="extra-card reco-card">
+  <div class="extra-heading"><div><p class="eyebrow">PARA VOCÊ</p><h2>Recomendações</h2></div><span class="extra-icon">✨</span></div>
+  <div id="recoList" class="reco-list"></div>
+</article>
+<article class="extra-card bookmarks-card">
+  <div class="extra-heading"><div><p class="eyebrow">MARCADORES</p><h2>Continue de onde parou</h2></div><span class="extra-icon">🔖</span></div>
+  <div id="bookmarksList"></div>
+</article>
+<article class="extra-card club-card">
+  <div class="extra-heading"><div><p class="eyebrow">CLUBE DE LEITURA</p><h2>Grupo local</h2></div><span class="extra-icon">👥</span></div>
+  <div id="clubPanel"></div>
+</article>
+<article class="extra-card achievement-card"><div class="extra-heading"><div><p class="eyebrow">COLEÇÃO DE CONQUISTAS</p><h2>Marcos da jornada</h2></div><span class="extra-icon">✧</span></div><div class="achievement-list" id="achievementList"></div></article>
+        <article class="extra-card notes-card"><div class="extra-heading"><div><p class="eyebrow">CADERNO DE LEITURA</p><h2>Uma ideia para guardar</h2></div><span class="extra-icon">✎</span></div><textarea id="notesInput" placeholder="Anote uma frase, ideia ou personagem que quer lembrar..."></textarea><div class="notes-foot"><span>Suas notas ficam salvas neste dispositivo.</span><span id="notesSaved"></span></div></article>
+      </section>
+    </section>
+
+    <section class="page-view library-view" id="libraryView" hidden>
+      <section class="page-intro library-intro"><a class="back-link" href="#inicio" data-route="inicio">← Voltar ao início</a><p class="eyebrow">SUA COLEÇÃO, EM OUTRA PERSPECTIVA</p><h1>A biblioteca <em>ganha vida.</em></h1><p>Explore o salão, gire a câmera e escolha uma lombada. Os livros com selo “PDF integral” abrem o texto completo.</p><div class="library-stats"><span><b id="libraryBookCount">33</b> títulos</span><i></i><span>3 estantes · 15 prateleiras</span><i></i><span>Uma aventura a cada página</span></div></section>
+      <section class="library3d-section" aria-label="Estante 3D da biblioteca">
+        <div class="library3d-heading"><div><p class="eyebrow">O SALÃO DE LEITURA</p><h2>Escolha sua próxima história</h2></div><span class="scene-help">Arraste para girar · role para aproximar · clique numa lombada</span></div>
+        <div class="library3d-stage" id="library3d"><div class="scene-fallback" id="sceneFallback">A estante 3D precisa de WebGL. Ative a aceleração gráfica do navegador; os livros PDF completos estão abaixo.</div><div class="scene-badge" id="sceneBadge">📚 <span>Livros digitais</span></div><div class="scene-controls" aria-label="Controles da estante 3D"><button type="button" id="sceneLeft" aria-label="Girar estante para a esquerda" title="Girar para a esquerda">↶</button><button type="button" id="sceneRight" aria-label="Girar estante para a direita" title="Girar para a direita">↷</button><span></span><button type="button" id="sceneZoomOut" aria-label="Afastar estante" title="Afastar">−</button><button type="button" id="sceneZoomIn" aria-label="Aproximar estante" title="Aproximar">＋</button></div><div class="scene-halloween" id="sceneHalloween" aria-hidden="true">🎃</div></div>
+      </section>
+      <section class="shelves-section library-shelves" id="estantes"><div class="section-heading"><div><p class="eyebrow">PRATELEIRAS POR GÊNERO</p><h2>Encontre o próximo favorito</h2></div><label class="search-box"><span>⌕</span><input id="searchInput" type="search" placeholder="Buscar livro ou autor" aria-label="Buscar livro ou autor"></label></div><div class="filter-row" id="filters"><button class="filter active" data-filter="Todos">Todos</button><button class="filter" data-filter="Fantasia">Fantasia</button><button class="filter" data-filter="Mistério">Mistério</button><button class="filter" data-filter="Romance">Romance</button><button class="filter" data-filter="Ficção científica">Ficção científica</button><button class="filter" data-filter="Poesia">Poesia</button><button class="filter" data-filter="Aventura">Aventura</button><button class="filter" data-filter="Ensaio">Ensaio</button></div><div id="shelfRoot"></div></section>
+      <footer class="footer"><span>Continum · cada página é um passo.</span><button id="resetButton" title="Apaga o progresso local e reinicia o jogo">Reiniciar progresso</button></footer>
+    </section>
+
+    <section class="page-view terror-view" id="terrorView" hidden>
+      <section class="terror-hero"><a class="back-link" href="#biblioteca" data-route="biblioteca">← Voltar às estantes</a><div class="terror-copy"><p class="eyebrow">PORTAL DE HALLOWEEN · LUZES BAIXAS, HISTÓRIAS ACESAS</p><h1>Entre se tiver <em>coragem.</em></h1><p>Suspense, casas inquietas e mistérios para ler à noite — sem gore, só aquela sensação de que algo está prestes a acontecer.</p><span class="terror-note">Nesta seleção, “amostra” indica que o livro ainda não tem PDF completo incluído.</span></div><div class="haunted-moon" aria-hidden="true"><span>☾</span><i>🦇</i><b>🎃</b></div></section>
+      <section class="terror-shelf-section"><div class="section-heading"><div><p class="eyebrow">A COLEÇÃO SOMBRIA</p><h2>Suspense para virar a página</h2><p class="muted">Escolha uma capa para ver detalhes e começar uma amostra.</p></div><span class="terror-count" id="terrorCount">0 histórias</span></div><div class="terror-shelf-frame"><div class="terror-shelf-top"><span>ARQUIVO DA MEIA-NOITE</span><span>✦ ✧ ✦</span></div><div class="halloween-achievements">
+  <p class="eyebrow">DISTINTIVOS DE HALLOWEEN</p>
+  <div id="halloweenBadges" class="achievement-list"></div>
+</div>
+<div id="terrorRoot" class="terror-book-grid"></div><div class="shelf-wood"></div></div></section>
+      <section class="terror-bottom"><span>🕯️</span><p>Apague as luzes se quiser. Deixe uma acesa para encontrar o caminho de volta.</p><a href="#biblioteca" data-route="biblioteca">Ver toda a biblioteca →</a></section>
+      <footer class="footer"><span>Continum · cada página é um passo.</span><button id="resetButtonTerror" title="Apaga o progresso local e reinicia o jogo">Reiniciar progresso</button></footer>
+    </section>
+  </main>
+
+  <div class="modal-backdrop" id="modal" hidden><section class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle"><button class="modal-close" id="modalClose" aria-label="Fechar">×</button><div id="modalBody"></div></section></div>
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  <script src="vendor/pdf.min.js"></script>
+  <script src="app.js"></script>
+  <script src="library3d.js"></script>
+</body>
+</html>
